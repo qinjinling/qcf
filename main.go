@@ -172,5 +172,5 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/search", searchHandler)
 	http.HandleFunc("/detail", detailHandler)
-	log.Fatal(http.ListenAndServe(":8090", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

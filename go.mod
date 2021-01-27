@@ -1,4 +1,4 @@
-module gotest
+module taormina
 
 go 1.15
 
