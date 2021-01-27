@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+
+<body>
+    <h1 style="color:#3498db">{{.PartNumber}}</h1>
+    <p style="color: royalblue;">{{.PartType}}</p>
+    <p>{{.PartTags}}</p>
+    <!-- <p>Part Status:{{.PartStatus}}</p>
+    <p>Reach Compliant:{{.Reach}}</p>
+    <p>EU RoHS:{{.EURoHS}}</p>
+    <p>China RoHS:{{.ChinaRoHS}}</p> -->
+    <table>
+        <tr>
+            <th>Manufacturer</th>
+            <th>Available Qty</th>
+            <th>Ship Date</th>       
+            <th style="text-align:right;">Quantity & </th>
+            <th>Pricing(USD)</th>
+        </tr>
+        {{range $index, $d := .Details}}
+        <tr>
+            <td>{{$d.Manufacturer}}</td>
+            <td>{{$d.AvailableQty}}</td>
+            <td>{{$d.ShipDate}}</td>
+            <td>
+                <div style="display:flex;flex-direction:column;text-align:right">{{$d.Quantity}}</div>
+            </td>
+            <td>
+                <div style="display:flex;flex-direction:column">{{$d.Pricing}}</div>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+</body>
+</html>

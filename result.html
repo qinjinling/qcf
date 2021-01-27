@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    <h1>Search Result</h1>    
+    <ul>
+        {{range .Tables}}
+        {{if eq .IsStock "Yes"}}
+        <li style="color:green;">In Stock: <a href="/detail?pn={{.PartNumber}}&id={{.MasterPartID}}">{{.PartNumber}}</a></li>
+        {{else if eq .IsStock "No"}}
+        <li style="color:red;">Out of Stock: {{.PartNumber}}</li>
+        {{end}}
+        {{end}}
+    </ul>
+</body>
+</html>
+
