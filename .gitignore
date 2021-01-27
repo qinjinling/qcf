@@ -10,7 +10,7 @@
 *.code-workspace
 
 ### Go ###
-gotest
+taormina
 # Binaries for programs and plugins
 *.exe
 *.exe~
