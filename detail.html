@@ -7,8 +7,7 @@
 </head>
 
 <body>
-    <h1 style="color:#3498db">{{.PartNumber}}</h1>
-    <p style="color: royalblue;">{{.PartType}}</p>
+    <h1 style="color:#3498db">{{.PartNumber}} <small style="color: royalblue;font-size: 1rem;">{{.PartType}}</small></h1>
     <p>{{.PartTags}}</p>
     <!-- <p>Part Status:{{.PartStatus}}</p>
     <p>Reach Compliant:{{.Reach}}</p>
@@ -23,7 +22,7 @@
             <th>Pricing(USD)</th>
         </tr>
         {{range $index, $d := .Details}}
-        <tr>
+        <tr {{if $d.BorderBottomHighligt}}style="border-bottom: 2px solid rgb(26, 188, 156);"{{end}}>
             <td>{{$d.Manufacturer}}</td>
             <td>{{$d.AvailableQty}}</td>
             <td>{{$d.ShipDate}}</td>
@@ -36,5 +35,6 @@
         </tr>
         {{end}}
     </table>
+    <footer> <a href="/">返回首页</a> </footer>
 </body>
 </html>

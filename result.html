@@ -10,9 +10,9 @@
     <ul>
         {{range .Tables}}
         {{if eq .IsStock "Yes"}}
-        <li style="color:green;">In Stock: <a href="/detail?pn={{.PartNumber}}&id={{.MasterPartID}}">{{.PartNumber}}</a></li>
+        <li style="color:green;"><a href="/detail?pn={{.PartNumber}}&id={{.MasterPartID}}">{{.PartNumber}}</a></li>
         {{else if eq .IsStock "No"}}
-        <li style="color:red;">Out of Stock: {{.PartNumber}}</li>
+        <li style="color:red;">{{.PartNumber}}</li>
         {{end}}
         {{end}}
     </ul>
