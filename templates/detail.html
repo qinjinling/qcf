@@ -7,18 +7,16 @@
 </head>
 
 <body>
-    <h1 style="color:#3498db">{{.PartNumber}} <small style="color: royalblue;font-size: 1rem;">{{.PartType}}</small></h1>
-    <p>{{.PartTags}}</p>
-    <!-- <p>Part Status:{{.PartStatus}}</p>
-    <p>Reach Compliant:{{.Reach}}</p>
-    <p>EU RoHS:{{.EURoHS}}</p>
-    <p>China RoHS:{{.ChinaRoHS}}</p> -->
+    <h1 style="color:#3498db">{{.PartNumber}} 
+        <small style="color: royalblue;font-size: 1rem;">{{.Category}}</small>
+    </h1>
+    <p>{{.Description}}</p>
     <table>
         <tr>
             <th>Manufacturer</th>
             <th>Available Qty</th>
             <th>Ship Date</th>       
-            <th style="text-align:right;">Quantity & </th>
+            <th style="text-align:right;">Quantity</th>
             <th>Pricing(USD)</th>
         </tr>
         {{range $index, $d := .Details}}
