@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"strconv"
 	"strings"
-	"text/template"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -83,19 +83,15 @@ func getDetail(url string) (*PartDetail, error) {
 
 // 明细页面处理器
 func detailHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.FormValue("id")
+	mpid := r.FormValue("mpid")
 	pn := r.FormValue("pn")
 	pn = strings.ToLower(pn)
-	pn = strings.Replace(pn, ":", "", -1)
-	t := template.Must(template.ParseFiles("templates/detail.html"))
-	url := fmt.Sprintf("https://www.questcomp.com/part/4/%s/%s", pn, id)
+	url := fmt.Sprintf("https://www.questcomp.com/part/4/%s/%s", pn, mpid)
 	detail, err := getDetail(url)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = t.Execute(w, detail)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(detail)
 }

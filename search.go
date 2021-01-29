@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"encoding/xml"
 	"net/http"
-	"text/template"
 
 	"github.com/bitly/go-simplejson"
 )
@@ -46,14 +46,11 @@ func search(pn string) (*newDataSet, error) {
 // 查询处理器
 func searchHandler(w http.ResponseWriter, r *http.Request) {
 	pn := r.FormValue("pn")
-	nd, err := search(pn)
+	ds, err := search(pn)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	t := template.Must(template.ParseFiles("templates/result.html"))
-	err = t.Execute(w, nd)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(ds)
 }

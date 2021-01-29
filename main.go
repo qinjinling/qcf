@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	listenAddr := "8080"
+	listenAddr := "3000"
 	if len(os.Args) == 2 {
 		listenAddr = os.Args[1]
 	}
@@ -20,6 +20,7 @@ func main() {
 	// create a logger, router and server
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
 	router := http.NewServeMux()
+	router.HandleFunc("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./public"))).ServeHTTP)
 	router.HandleFunc("/", index)
 	router.HandleFunc("/healthz", healthz)
 	router.HandleFunc("/search", searchHandler)
