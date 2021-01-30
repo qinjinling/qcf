@@ -22,13 +22,14 @@ type PartDetail struct {
 
 // PartAvailability 零件库存信息
 type PartAvailability struct {
-	Manufacturer string
-	AvailableQty string
-	ShipDate     string
-	Quantity     string
-	Pricing      string
-	// 底边框是否高亮显示
-	BorderBottomHighligt bool
+	Manufacturer             string
+	AvailableQty             string
+	ShipDate                 string
+	Quantity                 string
+	Pricing                  string
+	IsAnyManufacturer        bool
+	IsAnyManufacturerInStock bool
+	BorderBottomHighligt     bool
 }
 
 // getDetail 根据网址抓取零件明细信息
@@ -61,9 +62,11 @@ func getDetail(url string) (*PartDetail, error) {
 	document.Find("#MasterPageContent_ucProductHeader_ucPartResults_divPartGrid .rpt-items").Each(func(i int, selection *goquery.Selection) {
 		pa := &PartAvailability{}
 		if selection.HasClass("rpt-any-mfg") {
+			pa.IsAnyManufacturer = true
 			pa.BorderBottomHighligt = true
 		}
 		if selection.HasClass("instock") {
+			pa.IsAnyManufacturerInStock = true
 			m["instock"] = i
 		}
 		pa.Manufacturer = selection.Find("#MasterPageContent_ucProductHeader_ucPartResults_rptPartResults_divRptPartResultsMfg_" + strconv.Itoa(i)).Text()

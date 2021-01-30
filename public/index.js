@@ -94,7 +94,9 @@
   }
 
   var PartTable = {
+    hidden: true,
     view: function (vnode) {
+      var self = this
       var tableHeading = m('tr', [
         m('th', '制造商'),
         m('th', '库存'),
@@ -103,10 +105,18 @@
         m('th', '美元')
       ])
       var tableRows = vnode.attrs.data.map(function (row) {
-        return m('tr', {
-          style: row.BorderBottomHighligt ? 'border-bottom: 2px solid rgb(26, 188, 156);' : ''
-        }, [
-          m('td', row.Manufacturer),
+        var borderStyle = 'border-bottom: 2px solid rgb(26, 188, 156);'
+        var displyNone = 'display:none;'
+        var rowStyle = row.BorderBottomHighligt ? borderStyle : ''
+        if (self.hidden && row.IsAnyManufacturerInStock) {
+          rowStyle += displyNone;
+        }
+        return m('tr', { style: rowStyle }, [
+          m('td', row.IsAnyManufacturer ? [row.Manufacturer, m('small', m('button', {
+            onclick: function () {
+              self.hidden = !self.hidden
+            }
+          }, self.hidden ? '⇣查看厂家' : '⇡隐藏厂家'))] : row.Manufacturer),
           m('td', row.AvailableQty),
           m('td', row.ShipDate),
           m('td', m('div', {
