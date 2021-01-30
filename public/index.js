@@ -4,8 +4,8 @@
   var ds = []
 
   var StripPnForUrlRoute = function (pn) {
-    pn = pn.replace(/['/','\']/g, "-").replace(/[+,&,*,:,%,?]/g, "");
-    return pn;
+    pn = pn.replace(/['/','\']/g, "-").replace(/[+,&,*,:,%,?]/g, "")
+    return pn
   }
 
   var Header = {
@@ -34,9 +34,11 @@
         onclick: function () {
           self.disabled = true
           m.request({
-            method: "POST",
-            url: "/search?pn=" + self.pn,
-            withCredentials: true,
+            method: "GET",
+            url: "/search",
+            params: {
+              pn: self.pn
+            },
           })
           .then(function (data) {
             self.disabled = false
@@ -115,9 +117,7 @@
           }, m.trust(row.Pricing))),
         ])
       })
-      return m('table', {
-        cellspacing: '0'
-      }, [
+      return m('table',[
         m('thead', tableHeading),
         m('tbody', tableRows)
       ])
@@ -128,16 +128,31 @@
     oninit: function(vnode) {
       var self = this
       m.request({
-        method: 'POST',
-        url: '/detail?pn=' + StripPnForUrlRoute(vnode.attrs.pn) + '&mpid=' + vnode.attrs.mpid,
-        withCredentials: true,
+        method: 'GET',
+        url: '/detail',
+        params: {
+          pn: StripPnForUrlRoute(vnode.attrs.pn),
+          mpid: vnode.attrs.mpid
+        },
       })
       .then(function (data) {
         self.detail = data
       })
+      .catch(function (e) {
+        self.error = e.message
+      })
     },
     view: function (vnode) {
       var self = this
+      if (self.error) {
+        return [
+          m(Header),
+          m('div', {
+            style: 'color: red'
+          }, self.error),
+          m('a', {href: '#!/'}, '返回')
+        ]
+      }
       if (!self.detail) {
         return [m(Header), m('h4', 'Loading...')]
       }
