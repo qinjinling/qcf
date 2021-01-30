@@ -94,11 +94,11 @@
   var PartTable = {
     view: function (vnode) {
       var tableHeading = m('tr', [
-        m('th', 'Manufacturer'),
-        m('th', 'Available Qty'),
-        m('th', 'Ship Date'),
-        m('th', {style: 'text-align:right;'}, 'Quantity'),
-        m('th', 'Pricing(USD)')
+        m('th', '制造商'),
+        m('th', '库存'),
+        m('th', '发货日期'),
+        m('th', {style: 'text-align:right;'}, '数量阶梯'),
+        m('th', '美元')
       ])
       var tableRows = vnode.attrs.data.map(function (row) {
         return m('tr', {
@@ -148,7 +148,7 @@
           m('small', {style: 'color: royalblue;font-size: 1rem;margin-left:5px;'}, self.detail.Category)
         ]),
         m('p', self.detail.Description),
-        m(PartTable, { data: self.detail.Details }),
+        m(PartTable, { data: self.detail.Details || [] }),
         m('footer', m('a', {href: '#!/'}, '返回'))
       ]
     }
