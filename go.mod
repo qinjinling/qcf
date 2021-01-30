@@ -1,4 +1,4 @@
-module taormina
+module github.com/gowk/taormina
 
 go 1.15
 

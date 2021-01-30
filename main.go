@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	listenAddr := "3000"
+	listenAddr := "8080"
 	if len(os.Args) == 2 {
 		listenAddr = os.Args[1]
 	}
