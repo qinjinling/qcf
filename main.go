@@ -46,7 +46,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	t := template.Must(template.ParseFiles("templates/index.html"))
+	t := template.Must(template.ParseFiles("public/index.html"))
 	t.Execute(w, nil)
 }
 
