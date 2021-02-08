@@ -1,4 +1,4 @@
-module github.com/gowk/taormina
+module github.com/qinjinling/qcf
 
 go 1.15
 
