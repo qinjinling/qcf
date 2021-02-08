@@ -1,14 +1,14 @@
 export default function PartDetail() {
     let partNumber, mpid
     let detail, error
+    let hidden = true
 
-    function StripPnForUrlRoute(pn) {
+    function stripPnForUrlRoute(pn) {
         pn = pn.replace(/['/','\']/g, "-").replace(/[+,&,*,:,%,?]/g, "")
         return pn
     }
 
     function PartTable(data) {
-        let showAnyManufacturer = false
         return m('table', [
             m('thead', m('tr', [
                 m('th', '制造商'),
@@ -21,15 +21,15 @@ export default function PartDetail() {
                 var borderStyle = 'border-bottom: 2px solid rgb(26, 188, 156);'
                 var displyNone = 'display:none;'
                 var rowStyle = row.BorderBottomHighligt ? borderStyle : ''
-                if (showAnyManufacturer && row.IsAnyManufacturerInStock) {
+                if (hidden && row.IsAnyManufacturerInStock) {
                     rowStyle += displyNone;
                 }
                 return m('tr', { style: rowStyle }, [
                     m('td', row.IsAnyManufacturer ? [row.Manufacturer, m('small', m('button', {
                         onclick: function () {
-                            showAnyManufacturer = !showAnyManufacturer
+                            hidden = !hidden
                         }
-                    }, showAnyManufacturer ? '⇣查看厂家' : '⇡隐藏厂家'))] : row.Manufacturer),
+                    }, hidden ? '⇣查看厂家' : '⇡隐藏厂家'))] : row.Manufacturer),
                     m('td', row.AvailableQty),
                     m('td', row.ShipDate),
                     m('td', m('div', {
@@ -72,7 +72,7 @@ export default function PartDetail() {
             method: 'GET',
             url: '/detail',
             params: {
-                pn: StripPnForUrlRoute(partNumber),
+                pn: stripPnForUrlRoute(partNumber),
                 mpid: m.route.param('mpid')
             },
         }).then(function (data) {
