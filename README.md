@@ -1,4 +1,4 @@
-# taoramina
+# qcf
 
 一个代理 questcomp.com 根据型号查询元件价格的小工具。
 
