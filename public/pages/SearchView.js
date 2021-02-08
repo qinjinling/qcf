@@ -2,7 +2,6 @@ export default function SearchView() {
     let pn = ''
     let disabled = false
     let clicked = false
-    let tables = []
 
     function PartNumberLink(row) {
         if (row.IsStock == 'No')
@@ -13,8 +12,8 @@ export default function SearchView() {
     }
 
     function searchResult() {
-        if (tables && tables.length > 0) {
-            return m('ul', tables.map(function (row) {
+        if (window.tables && window.tables.length > 0) {
+            return m('ul', window.tables.map(function (row) {
                 return m('li', {
                     style: row.IsStock == 'Yes' ? 'color:green;' : 'color:red;'
                 }, PartNumberLink(row))
@@ -37,7 +36,7 @@ export default function SearchView() {
         }).then(function (data) {
             disabled = false
             clicked = true
-            tables = data.Tables
+            window.tables = data.Tables
         })
     }
 
