@@ -23,14 +23,21 @@ type table struct {
 
 // search 根据零件编号查询零件标识信息
 func search(pn string) (*newDataSet, error) {
-	baseURL := "https://www.questcomp.com/baseform.aspx/searchpartsforautocomplete"
-	req := bytes.NewBuffer([]byte(`{"pn":"` + pn + `"}`))
-	res, err := http.Post(baseURL, "application/json; charset=utf-8", req)
+	url := "https://www.questcomp.com/baseform.aspx/searchpartsforautocomplete"
+	json := []byte(`{"pn":"` + pn + `"}`)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(json))
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
-	js, err := simplejson.NewFromReader(res.Body)
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	js, err := simplejson.NewFromReader(resp.Body)
 	if err != nil {
 		return nil, err
 	}

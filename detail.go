@@ -39,11 +39,12 @@ func getDetail(url string) (*PartDetail, error) {
 		Timeout: timeout,
 	}
 	var body io.Reader
-	request, err := http.NewRequest("GET", url, body)
+	req, err := http.NewRequest("GET", url, body)
 	if err != nil {
 		return nil, err
 	}
-	res, err := client.Do(request)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36")
+	res, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
